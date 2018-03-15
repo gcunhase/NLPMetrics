@@ -2,3 +2,4 @@
 assets_*
 
 *\.pyc
+.DS_Store
