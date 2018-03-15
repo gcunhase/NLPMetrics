@@ -1,6 +1,2 @@
-BLEU corpus: 0.766573000842
-BLEU sent_average: 0.619539348844
-
-GLEU corpus: 0.776422764228
-GLEU sent_average: 0.576735316552
+METEOR sent_average: 0.0
 

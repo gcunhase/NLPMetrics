@@ -39,11 +39,15 @@ def test_score_file():
 
     # Initialize handler for text scores
     text_score = TextScore()
-    text_score.score_multiple_from_file(ref_file, hyp_file, scores_file, score_type="BLEU GLEU", average_prec="corpus sent_average")
+    # text_score.score_multiple_from_file(ref_file, hyp_file, scores_file, score_type="BLEU GLEU", average_prec="corpus sent_average")
+    text_score.score_multiple_from_file(ref_file, hyp_file, scores_file, score_type="METEOR", average_prec="corpus sent_average")
+
 
 if __name__ == '__main__':
-    #test_score_string()
+    # print("\n1. Test score string")
+    # test_score_string()
 
+    print("\n2. Test score file")
     test_score_file()
 
 
