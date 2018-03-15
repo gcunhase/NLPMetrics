@@ -23,3 +23,4 @@
 
 
 ### Summarization
+1. ROUGE (Recall-Oriented Understudy for Gisting Evaluation):
