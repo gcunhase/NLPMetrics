@@ -1,5 +1,6 @@
 from module.mt_text_score import TextScore
 import module.utils as utils
+import os
 
 
 def test_score_string():
@@ -39,8 +40,14 @@ def test_score_file():
 
     # Initialize handler for text scores
     text_score = TextScore()
+    # BLEU, GLEU, WER, TER
     # text_score.score_multiple_from_file(ref_file, hyp_file, scores_file, score_type="BLEU GLEU", average_prec="corpus sent_average")
-    text_score.score_multiple_from_file(ref_file, hyp_file, scores_file, score_type="METEOR", average_prec="corpus sent_average")
+    #text_score.score_multiple_from_file(ref_file, hyp_file, scores_file, score_type="BLEU, GLEU, WER, TER", average_prec="corpus, sent_average")
+
+    # METEOR: receives 2 files
+    #text_score.meteor_score_from_files(ref_file, hyp_file)
+    #text_score.ter_score(ref_file, hyp_file)
+
 
 
 if __name__ == '__main__':

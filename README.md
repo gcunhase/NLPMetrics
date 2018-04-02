@@ -33,17 +33,19 @@
     * Includes: exact word, stem and synonym matching
     * Designed to fix some of the problems found in the BLEU metric, while also producing good correlation with human
         judgement at the sentence or segment level (unlike BLEU which seeks correlation at the corpus level).
-5. **CIDEr**:     
-    * About: 
-    * Limitation:
-6. **TER** (Translation Edit Rate)
-    * About: 
-    * Limitation:
+    * It is generally prefered to BLEU for estimation of sentence post-editing effort. [Source](http://opennmt.net/OpenNMT/tools/scorer/)
+    * [Python jar wrapper](https://github.com/tylin/coco-caption/tree/master/pycocoevalcap/meteor)
+5. **TER** (Translation Edit Rate)
+    * Snover et al. 2006
+    * About: number of edits (words deletion, addition and substitution) required to make a machine translation match
+        exactly to the closest reference translation in fluency and semantics
+    * TER = E/R = (minimum number of edits) / (average length of reference text)
+    * [PyTER](https://pypi.python.org/pypi/pyter/0.2.2.1)
     * **char-TER**: character level TER
+6. **CIDEr**
+    * Used as a measurement for image caption quality
 7. **GTM** (General Text Matcher)
-    * About: 
-    * Limitation:
-
+    
 
 ### Summarization
 1. **ROUGE** (Recall-Oriented Understudy for Gisting Evaluation)

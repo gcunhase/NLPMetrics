@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+
+<!-- A copy of this README can be viewed at http://www.cs.cmu.edu/~alavie/METEOR/README.html -->
+
+<html>
+
+    <head>
+        <meta charset="utf-8">
+        <title>Meteor 1.5 README</title>
+        <style media="all" type="text/css">
+            body {
+                background: #000000;
+            }
+            #page {
+                background: #ffffff;
+                color: #000000;
+                width: 900px;
+                margin-left: auto;
+                margin-right: auto;
+                padding: 12px;
+                text-align: justify;
+                font-family: sans-serif;
+            }
+            h1 {
+                margin: 0px;
+                padding: 0px 0px 6px 0px;
+                font-size: 18pt;
+                text-align: center;
+            }
+            h2 {
+                font-size: 16pt;
+                text-align: center;
+            }
+            h3 {
+                font-size: 14pt;
+
+            }
+            h4 {
+                padding: 6px 0px 0px 0px;
+                margin: 0px;
+                font-size: 14pt;
+                text-align: center;
+            }
+            h5 {
+                font-size: 12pt;
+                padding: 0px;
+                margin: 0px 0px 6px 0px;
+            }
+            a {
+                text-decoration: none;
+                color: #0000ff;
+            }
+            a:hover {
+                text-decoration: underline;
+            }
+            .padded {
+                padding-left: 12px;
+                padding-right: 12px;
+            }
+            table, tr, td {
+                border: solid;
+                border-width: 1px;
+                border-collapse: collapse;
+            }
+            td {
+                padding: 4px;
+            }
+            .gray {
+                background: #dddddd;
+            }
+            .yes {
+                background: #99ff99;
+                text-align: center;
+            }
+            .no {
+                background: #ff9999;
+                text-align: center;
+            }
+            .part {
+                background: #ffff99;
+                text-align: center;
+            }
+            pre {
+                background: #dddddd;
+                border: solid;
+                border-width: 1px;
+                padding: 6px;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div id="page">
+            <h1>Meteor 1.5: Automatic Machine Translation Evaluation System</h1>
+            <h4>Code by <a target="_blank" href="http://www.cs.cmu.edu/~mdenkows/">Michael Denkowski</a></h4>
+            <h4><a class="padded" target="_blank" href="http://www.cs.cmu.edu/~alavie/METEOR/">Website</a><a class="padded" target="_blank" href="http://github.com/mjdenkowski/meteor">Github</a></h4>
+
+            <h3>Table of Contents:</h3>
+            <a href="#about">1. About</a><br />
+            <a href="#languages">2. Supported Languages</a><br />
+            <a href="#running">3. Running Meteor</a><br />
+            <a href="#options">4. Meteor Options</a><br />
+            <a href="#aligner">5. Standalone Meteor Aligner</a><br />
+            <a href="#stemmer">6. Standalone Word Stemmer</a><br />
+            <a href="#integration">7. Integrating Meteor with your Software</a><br />
+            <a href="#xray">8. Meteor X-ray</a><br />
+            <a href="#training">9. Training Meteor Parameters</a><br />
+            <a href="#universal">10. Meteor Universal: Evaluation for Any Language</a><br />
+            <a href="#thanks">11. Special Thanks</a><br />
+
+            <h3><a name="about"></a>1. About</h3>
+            <p>
+                Meteor consists of two major components: a flexible monolingual word aligner and a scorer.
+                For machine translation evaluation, hypothesis sentences are aligned to reference sentences.
+                Alignments are then scored to produce sentence and corpus level scores.
+                Score and alignment information can also be used to visualize word alignments and score distributions using Meteor X-ray.
+                For detailed information on Meteor word alignment and scoring, see <a href="http://www.cs.cmu.edu/~alavie/METEOR/pdf/meteor-wmt11.pdf">Denkowski and Lavie, 2011</a>.
+                This paper also details the flexible matching support that allows Meteor to align words and phrases with differing surface forms.
+            </p>
+            <p>
+                This release includes the following software:
+                <ul>
+                    <li>The Meteor MT evaluation metric</li>
+                    <li>The standalone monolingual word aligner</li>
+                    <li>Indepedently usable paraphrase tables for supported languages</li>
+                    <li>The X-ray system for visualizing alignments and score distributions</li>
+                </ul>
+            </p>
+            <p>
+                Meteor is released under the  GNU Lesser General Public License (LGPL) and includes some files subject to the (compatible) WordNet license.
+                See the included COPYING files for details.
+            </p>
+            <h3><a name="languages"></a>2. Supported Languages</h3>
+            <p>
+                Language support is divided into two groups.
+                Fully supported languages include flexible word and phrase matching (at least one type of match other than exact) and language-specific parameters tuned to maximize correlation between Meteor scores and human judgments of translation quality.
+                Partially supported languages include flexible word matching and use language-independent parameters chosen to generalize well across known languages.
+            </p>
+            <p>
+                Fully supported languages:
+                <table>
+                    <tr class="gray"><td>Language</td><td>Exact Match</td><td>Stem Match</td><td>Synonym Match</td><td>Paraphrase Match</td><td>Tuned Parameters</td></tr>
+                    <tr><td class="gray">English</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="yes">Yes</td></tr>
+                    <tr><td class="gray">Arabic</td><td class="yes">Yes</td><td class="no">No</td><td class="no">No</td><td class="yes">Yes</td><td class="yes">Yes</td></tr>
+                    <tr><td class="gray">Czech</td><td class="yes">Yes</td><td class="no">No</td><td class="no">No</td><td class="yes">Yes</td><td class="yes">Yes</td></tr>
+                    <tr><td class="gray">French</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="no">No</td><td class="yes">Yes</td><td class="yes">Yes</td></tr>
+                    <tr><td class="gray">German</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="no">No</td><td class="yes">Yes</td><td class="yes">Yes</td></tr>
+                    <tr><td class="gray">Spanish</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="no">No</td><td class="yes">Yes</td><td class="yes">Yes</td></tr>
+                </table>
+            </p>
+            <p>
+                Partially supported languages:
+                <table>
+                    <tr class="gray"><td>Language</td><td>Exact Match</td><td>Stem Match</td><td>Synonym Match</td><td>Paraphrase Match</td><td>Tuned Parameters</td></tr>
+                    <tr><td class="gray">Danish</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="no">No</td><td class="no">No</td><td class="part">LI</td></tr>
+                    <tr><td class="gray">Dutch</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="no">No</td><td class="no">No</td><td class="part">LI</td></tr>
+                    <tr><td class="gray">Finnish</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="no">No</td><td class="no">No</td><td class="part">LI</td></tr>
+                    <tr><td class="gray">Hungarian</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="no">No</td><td class="no">No</td><td class="part">LI</td></tr>
+                    <tr><td class="gray">Italian</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="no">No</td><td class="no">No</td><td class="part">LI</td></tr>
+                    <tr><td class="gray">Norwegian</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="no">No</td><td class="no">No</td><td class="part">LI</td></tr>
+                    <tr><td class="gray">Portuguese</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="no">No</td><td class="no">No</td><td class="part">LI</td></tr>
+                    <tr><td class="gray">Romanian</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="no">No</td><td class="no">No</td><td class="part">LI</td></tr>
+                    <tr><td class="gray">Russian</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="no">No</td><td class="no">No</td><td class="part">LI</td></tr>
+                    <tr><td class="gray">Swedish</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="no">No</td><td class="no">No</td><td class="part">LI</td></tr>
+                    <tr><td class="gray">Turkish</td><td class="yes">Yes</td><td class="yes">Yes</td><td class="no">No</td><td class="no">No</td><td class="part">LI</td></tr>
+                </table>
+            </p>
+            <p>
+                Paraphrase capability can also be added to unsupported languages.
+                If your MT system has a bilingual phrase table, you can use <a target="_blank" href="http://github.com/mjdenkowski/parex">Parex</a> to build paraphrases tables and use them with Meteor.
+                For example, if you want to evaluate a system that translates into Danish and build a paraphrase table named paraphrase-da.gz, you can use:
+<pre>java -Xmx2G -jar meteor-*.jar test reference -l da \
+-a paraphrase-da.gz -m 'exact stem paraphrase' -w '1.0 0.5 0.5'
+</pre>
+                This tells Meteor to use the paraphrase table (-a paraphrase-da.gz) add the paraphrase module (-m 'exact stem paraphrase') and add a weight for paraphrases (-w '1.0 0.5 0.5').
+            </p>
+            <p>
+                Other Languages:
+            </p>
+            <p>
+                Meteor is capable of scoring UTF-8 encoded data for any language.
+                Specifying language "other" will automatically select exact matches only for alignment and language-independent scoring parameters.
+                Remember to pre-segment, tokenize, and lowercase text as needed.
+                <pre>java -Xmx2G -jar meteor-*.jar test reference -l other</pre>
+            </p>
+            <h3><a name="running"></a>3. Running Meteor</h3>
+            <p>
+                To call Meteor, run the following:
+                <pre>java -Xmx2G -jar meteor-*.jar</pre>
+                Running Meteor with no arguments prints the following help message:
+<pre>
+Meteor version 1.4
+
+Usage: java -Xmx2G -jar meteor-*.jar &lt;test&gt; &lt;reference&gt; [options]
+
+Options:
+-l language                     Fully supported: en cz de es fr ar
+                                Supported with language-independent parameters:
+                                  da fi hu it nl no pt ro ru se tr
+-t task                         One of: rank util adq hter li tune
+                                  util implies -ch
+-p 'alpha beta gamma delta'     Custom parameters (overrides default)
+-m 'module1 module2 ...'        Specify modules (overrides default)
+                                  Any of: exact stem synonym paraphrase
+-w 'weight1 weight2 ...'        Specify module weights (overrides default)
+-r refCount                     Number of references (plaintext only)
+-x beamSize                     (default 40)
+-s wordListDirectory            (if not default for language)
+-d synonymDirectory             (if not default for language)
+-a paraphraseFile               (if not default for language)
+-f filePrefix                   Prefix for output files (default 'meteor')
+-q                              Quiet: Segment scores to stderr, final to stdout,
+                                  no additional output (plaintext only)
+-ch                             Character-based precision and recall
+-norm                           Tokenize / normalize punctuation and lowercase
+                                  (Recommended unless scoring raw output with
+                                   pretokenized references)
+-lower                          Lowercase only (not required if -norm specified)
+-noPunct                        Do not consider punctuation when scoring
+                                  (Not recommended unless special case)
+-sgml                           Input is in SGML format
+-mira                           Input is in MIRA format
+                                  (Use '-' for test and reference files)
+-vOut                           Output verbose scores (P / R / frag / score)
+-ssOut                          Output sufficient statistics instead of scores
+-writeAlignments                Output alignments annotated with Meteor scores
+                                  (written to &lt;prefix&gt;-align.out)
+
+Sample options for plaintext: -l &lt;lang&gt; -norm
+Sample options for SGML: -l &lt;lang&gt; -norm -sgml
+Sample options for raw output / pretokenized references: -l &lt;lang&gt; -lower
+
+See README file for additional information
+</pre>
+                The simplest way to run Meteor is as follows:
+                <pre>java -Xmx2G -jar meteor-*.jar test reference -l en -norm</pre>
+                This tells Meteor to score the file "test" against "reference", where test and reference are UTF-8 encoded files that contain one sentence per line.
+                The "-l en" option tells Meteor to use settings for English.
+                The -norm flag tells Meteor to apply language-specific text normalization before scoring.
+                These are the ideal settings for which language-specific parameters are tuned.
+            </p>
+            <p>
+                <b>Important note:</b> If you are scoring text in a partially supported language, do not use the -norm flag, as Meteor has no normalization rules for these languages.
+                Instead, use your own tools for segmenting, tokenizing, and lowercasing (if desired) the test and reference text prior to scoring.
+                Meteor will warn if the -norm flag is used with unsupported languages.
+                For example, to score Danish text, pre-tokenize the files and run:
+                <pre>java -Xmx2G -jar meteor-*.jar test.da.tok reference.da.tok -l da</pre>
+            </p>
+            <p>
+                To score the example files included with Meteor, use the following:
+                <pre>java -Xmx2G -jar meteor-*.jar example/xray/system1.hyp example/xray/reference -l en -norm</pre>
+                You should see the following output:
+<pre>
+Meteor version: 1.4
+
+Eval ID:        meteor-1.4-wo-en-norm-0.85_0.2_0.6_0.75-ex_st_sy_pa-1.0_0.6_0.8_0.6
+
+Language:       English
+Format:         plaintext
+Task:           Ranking
+Modules:        exact stem synonym paraphrase
+Weights:        1.0 0.6 0.8 0.6
+Parameters:     0.85 0.2 0.6 0.75
+
+Segment 1 score:        0.447752250844953
+Segment 2 score:        0.4284116369815996
+Segment 3 score:        0.2772888474043816
+Segment 4 score:        0.39587671218995263
+Segment 5 score:        0.34983532103052495
+.
+.
+.
+Segment 2485 score:     0.29553941444479426
+Segment 2486 score:     0.27829272093582047
+Segment 2487 score:     0.2825995999223381
+Segment 2488 score:     0.32037812996981163
+Segment 2489 score:     0.33120147321343485
+
+System level statistics:
+
+
+           Test Matches                  Reference Matches
+Stage      Content  Function    Total    Content  Function    Total
+1            16268     20842    37110      16268     20842    37110
+2              485        26      511        489        22      511
+3              820       119      939        845        94      939
+4             3813      3162     6975       3954      2717     6671
+Total        21386     24149    45535      21556     23675    45231
+
+Test words:             61600
+Reference words:        62469
+Chunks:                 20118
+Precision:              0.6767347074578696
+Recall:                 0.6500539115850005
+f1:                     0.663126043401952
+fMean:                  0.6539211143997783
+Fragmentation penalty:  0.5099053526424513
+
+Final score:            0.3204832379614146
+</pre>
+                The output contains the following in order:
+                <ul>
+                    <li>Meteor version</li>
+                    <li>Eval ID, a string that uniquely identifies all version, setting, and parameter information to ensure that other data sets scored with Meteor can be scored consistently and comparably</li>
+                    <li>Header describing settings and parameters</li>
+                    <li>Segment (sentence) level scores, one per line</li>
+                    <li>Match statistics</li>
+                    <li>Summary statistics</li>
+                    <li>Final score</li>
+                </ul>
+            </p>
+            <h3><a name="options"></a>4. Meteor Options</h3>
+            <p>
+                For the majority of scoring scenarios, only the -l and -norm options should be used.
+                For more advanced usage, the full list of options follows.
+            </p>
+            <p>
+                <h5>Language: -l lang</h5>
+                Use settings for specified language.
+                Lang can be either the language name or two letter code.
+                See the supported language list.
+            </p>
+            <p>
+                <h5>Task: -t task</h5>
+                Use a different pre-defined set of parameters for scoring (currently limited to English):
+                <ul>
+                    <li>rank: parameters tuned to human rankings from WMT09 and WMT10</li>
+                    <li>adq: parameters tuned to adequacy scores from NIST Open MT 2009</li>
+                    <li>hter: parameters tuned to HTER scores from GALE P2 and P3</li>
+                    <li>li: language-independent parameters</li>
+                </ul>
+            </p>
+            <p>
+                <h5>Parameters: -p 'alpha beta gamma delta'</h5>
+                Set parameters manually.
+                Parameter string should be quoted.
+            </p>
+            <p>
+                <h5>Modules: -m 'module1 module2 ...'</h5>
+                Set modules manually.
+                Options are: exact stem synonym paraphrase.
+                See supported languages.
+                Module string should be quoted.
+            </p>
+            <p>
+                <h5>Weights: -w 'weight1 weight2 ...'</h5>
+                Set weights for each match type manually.
+                Parameter string should be quoted.
+            </p>
+            <p>
+                <h5>Reference Count: -r refCount</h5>
+                Specify N, the number of reference sentences for each hypothesis.
+                For N references, it is assumed that the reference file will be N times the length of the test file, containing sets of N references in order.
+                For example, if N=4, reference lines 1-4 will correspond to test line 1, 5-8 to line 2, etc.
+            </p>
+            <p>
+                <h5>Beam Size: -x</h5>
+                This number, set to 40 by default, is used to limit the beam size when searching for the highest scoring alignment.
+                As parameters are tuned for a beam size of 40, simply increasing this number does not necessarily produce more reliable scores.
+            </p>
+            <p>
+                <h5>Word List Directory: -s wordListDirectory</h5>
+                This option should only be used to test external function word lists.
+                By default, the included function word lists will be used.
+            </p>
+            <p>
+                <h5>Synonymy Directory: -d synonymDirectory</h5>
+                This option should only be used to test external synonymy databases.
+                By default, the included synonymy database will be used.
+            </p>
+            <p>
+                <h5>Paraphrase File: -a paraphraseFile</h5>
+                This option should only be used to test external synonymy databases.
+                By default, the included paraphrase tables will be used.
+                To build your own paraphrase tables, use <a target="_blank" href="http://github.com/mjdenkowski/parex">Parex</a>.
+            </p>
+            <p>
+                <h5>File Prefix: -f filePrefix</h5>
+                If alignments are to be written, they are written to &lt;prefix&gt;-align.out.
+                In SGML mode, files produced will be &lt;filePrefix&gt;-seg.scr, &lt;filePrefix&gt;-doc.scr, &lt;filePrefix&gt;-sys.scr.
+                The default prefix is "meteor".
+            </p>
+            <p>
+                <h5>Quiet: -q</h5>
+                Sentence scores to stderr, one per line.
+                Corpus score to stdout, one line total.
+                No additional output.
+            </p>
+            <p>
+                <h5>Character-based -ch</h5>
+                Calculate character-based precision and recall.
+                Alignment is still word and phrase-level.
+                Fragmentation penalty is still word and phrase-level.
+            </p>
+            <p>
+                <h5>Normalize: -norm</h5>
+                Tokenize and lowercases input lines, normalize punctuation to improve scoring accuracy.
+                This option is highly recommended unless scoring raw system output against pretokenized references.
+            </p>
+            <p>
+                <h5>Lowercase: -lower</h5>
+                Lowercase input lines (not required if -norm also specified).
+                This is most commonly used scoring cased, tokenized outputs with pretokenized references.
+            </p>
+            <p>
+                <h5>Ignore Punctuation: -noPunct</h5>
+                If specified, punctuation symbols will be removed before scoring.
+                This is generally not recommended as parameters are tuned with punctuation included.
+            </p>
+            <p>
+                <h5>SGML: -sgml</h5>
+                This specifies that input is in SGML format.
+                In addition to summary output, the following files are produced:
+                <ul>
+                    <li>meteor-seg.scr contains lines: testset system document segment score</li>
+                    <li>meteor-doc.scr contains lines: testset system document score</li>
+                    <li>meteor-sys.scr contains lines: testset system score</li>
+                </ul>
+                The prefix can be changed with the -f option.
+            </p>
+            <p>
+                <h5>Stdio Format: -stdio</h5>
+                Input is from stdin using the format described below.
+                Stats and scores written to stdout.
+                Use "-" for test and reference files.
+                Input lines are of two types, SCORE and EVAL.
+                <pre>SCORE ||| reference 1 words ||| reference n words ||| hypothesis words</pre>
+                Scores hypothesis against one or more references and returns line of sufficient statistics.
+                <pre>EVAL ||| stats</pre>
+                Calculates final scores using output of SCORE lines.  Meteor exits on end-of-file.
+            </p>
+            <p>
+                <h5>Verbose Output: -vOut</h5>
+                Output verbose scores (Precision, Recall, Fragmentation, Score) in place of regular scores.
+            </p>
+            <p>
+                <h5>Sufficient Statistics: -ssOut</h5>
+                This option outputs sufficient statistics in place of scores and omits all other output.
+                Statistics for a single hypothesis/reference instance are:
+<pre>
+tstLen refLen stage1tstTotalMatches stage1refTotalMatches
+stage1tstWeightedMatches stage1refWeightedMatches s2tTM s2rTM s2tWM
+s2rWM s3tTM s3rTM s3tWM s3rWM s4tTM s4rTM s4tWM s4rWM chunks lenCost
+</pre>
+            </p>
+            <p>
+                <h5>Write Alignments: -writeAlignments</h5>
+                Write alignments between hypotheses and references to meteor-align.out or &lt;prefix&gt;-align.out when file prefix is specified.
+                Alignments are written in Meteor format, annotated with Meteor statistics:
+<pre>
+Title precision recall fragmentation score
+sentence1
+sentence2
+Line2Start:Length Line1Start:Length Module Score
+...
+</pre>
+            </p>
+            <h3><a name="aligner"></a>5. Standalone Meteor Aligner</h3>
+            <p>
+                Meteor includes a monolingual word aligner that can be run independently of the scorer.
+                To run the aligner, use:
+                <pre>java -Xmx2G -cp meteor-*.jar Matcher</pre>
+                Running the aligner with no arguments shows the help message:
+<pre>Meteor Aligner version 1.4
+Usage: java -Xmx2G -cp meteor-*.jar Matcher &lt;test&gt; &lt;reference&gt; [options]
+
+Options:
+-l language                     One of: en da de es fi fr hu it nl no pt ro ru se tr
+-m 'module1 module2 ...'        Specify modules (overrides default)
+                                  One of: exact stem synonym paraphrase
+-t type                         Alignment type (coverage vs accuracy)
+                                  One of: maxcov maxacc
+-x beamSize                     Keep speed reasonable
+-d synonymDirectory             (if not default)
+-a paraphraseFile               (if not default)
+
+See README file for examples
+</pre>
+                Most options are the same as in the Meteor scorer.
+                The additional option is -t, which specifies whether alignments should maximize coverage (comparable to recall) or accuracy (comparable to precision).
+            </p>
+            <p>
+                Sentences are read from test and reference files, one per line, and alignments are written to stdout using the Meteor format:
+<pre>
+Alignment &lt;line N&gt;
+sentence1
+sentence2
+Line2Start:Length	Line1Start:Length	Module		Score
+...
+</pre>
+            </p>
+            <p>
+                <b>Important note:</b> the Meteor Aligner does not apply any normalization to input text.
+                Text should be segmented, tokenized, and lowercased as desired prior to Meteor alignment.
+            </p>
+            <h3><a name="stemmer"></a>6. Standalone Word Stemmer</h3>
+            <p>
+                Meteor includes a standalone word stemmer for supported languages.
+                To run the stemmer, use:
+                <pre>java -cp meteor-*.jar Stemmer</pre>
+                Running the stemmer with no arguments shows the help message:
+<pre>Snowball stem some text in a supported language
+Languages: en da de es fi fr hu it nl no pt ro ru se tr
+Usage: Stemmer lang < in > out
+</pre>
+                The stemmer reads lines from stdin and writes to stdout.
+                Each word in the input is stemmed using the <a target="_blank" href="http://snowball.tartarus.org/">Snowball stemmer</a> for the specified language.
+            </p>
+            <p>
+                <b>Important note:</b> the Meteor Stemmer does not apply any normalization to input text.
+                Text should be segmented, tokenized, and lowercased as desired prior to Meteor alignment.
+            </p>
+            <h3><a name="integration"></a>7. Integrating Meteor with your Software</h3>
+            <p>
+                The simplest way to integrate Meteor with your software involves using the -stdio option:
+                <pre>java -Xmx2G -jar meteor-*.jar - - -l en -norm -stdio</pre>
+                This tells Meteor to use the English settings, normalize text, and use stdin/stdout.
+                You can then write lines of the following form to Meteor's stdin:
+                <pre>SCORE ||| reference 1 words ||| reference n words ||| hypothesis words</pre>
+                This scores a hypothesis against one or more references and returns a line of sufficient statistics.
+                <pre>EVAL ||| stats</pre>
+                This reads a line of sufficient statistics and produces a final score.  Meteor exits on end-of-file.
+            </p>
+            <p>
+                Languages such as C++, Python, and Perl can open an external process and communicate with its stdin and stdout.
+                For more information, see the documentation for process control for your language.
+            </p>
+            <p>
+                If your software is written in Java, you can use the Meteor API directly:
+<pre>
+import edu.cmu.meteor.scorer.MeteorConfiguration;
+import edu.cmu.meteor.scorer.MeteorScorer;
+import edu.cmu.meteor.util.Constants;
+
+MeteorConfiguration config = new MeteorConfiguration();
+config.setLanguage("en");
+config.setNormalization(Constants.NORMALIZE_KEEP_PUNCT);
+MeteorScorer scorer = new MeteorScorer(config);
+double score = scorer.getMeteorStats("test string", "reference string").score;
+</pre>
+            Remember to add meteor-*.jar to your classpath.
+            See the source files for MeteorConfiguration and MeteorScorer for additional information.
+            </p>
+            <h3><a name="xray"></a>8. Meteor X-ray</h3>
+            <p>
+                X-ray visualizes alignments and scores of one or more MT systems against a set of reference translations.
+                When scoring translation hypotheses with Meteor, use the -writeAlignments option to produce alignment files annotated with Meteor statistics.
+                X-Ray uses these files to produce graphical representations of alignment matrices and score distributions via XeTeX and Gnuplot.
+                Final output is in PDF form with intermediate LaTeX and plot files preserved for easy inclusion in reports and presentations.
+            </p>
+            <p>
+                Requirements:
+                <ul>
+                    <li>Python 2.6 or later 2.x (<a target="_blank" href="http://www.python.org/">http://www.python.org/</a>)</li>
+                    <li>XeTeX 2009 (<a target="_blank" href="http://www.tug.org/texlive/">http://www.tug.org/texlive/</a>)</li>
+                    <li>Gnuplot 4.4 or later (<a target="_blank" href="http://www.gnuplot.info/">http://www.gnuplot.info/</a>)</li>
+                    <li>GNU Unifont (Optional, used for non-western languages) (<a target="_blank" href="http://unifoundry.com/unifont.html">http://unifoundry.com/unifont.html</a>)</li>
+                </ul>
+                For example, on Ubuntu Linux, install the following packages:
+                <pre>sudo apt-get install python texlive-full gnuplot unifont</pre>
+            </p>
+            <p>
+                Setup:
+            </p>
+            <p>
+                If XeTeX and Gnuplot are installed somewhere other than /usr/bin, edit xray/Generation.py to include the correct locations:
+<pre>
+xelatex_cmd = '/usr/bin/xelatex'
+gnuplot_cmd = '/usr/bin/gnuplot'
+</pre>
+            </p>
+            <p>
+                Usage:
+            </p>
+            <p>
+                Run X-ray with the following:
+                <pre>python xray/xray.py</pre>
+                Running X-Ray with no arguments shows the help message:
+<pre>
+MX: X-Ray your translation output
+Usage: xray.py [options] &lt;align.out&gt; [align.out2 ...]
+
+Options:
+  -h, --help            show this help message and exit
+  -c, --compare         compare alignments of two result sets (only first 2
+                        input files used)
+  -n, --no-align        do not visualize alignments
+  -x MAX, --max=MAX     max alignments to sample (default use all)
+  -p PRE, --prefix=PRE  prefix for output files (default mx)
+  -l LBL, --label=LBL   optional system label list, comma separated:
+                        label1,label2,...
+  -u, --unifont         use unifont (use for non-western languages)
+</pre>
+            </p>
+            <p>
+                Example usage: score and visualize the hypotheses from system1 and system2 in the example/xray directory.
+            </p>
+            <p>
+                Score system1 with Meteor using the following options:
+<pre>
+java -Xmx2G -jar meteor-*.jar example/xray/system1.hyp example/xray/reference \
+-norm -writeAlignments -f system1
+</pre>
+                -norm: tokenize and normalize before scoring<br />
+                -writeAlignments: write out sentence alignments used to calculate Meteor scores<br />
+                -f system1: write alignments to system1-align.out<br />
+            </p>
+            <p>
+                Visualize alignments and scores of system1 with Meteor X-Ray:
+<pre>
+python xray/xray.py -p system1 system1-align.out
+</pre>
+                -p system1: prefix output files with 'system1'<br/>
+                system1-align.out: output from Meteor
+            </p>
+            <p>
+                Files produced:
+                <ul>
+                    <li>system1-align-system-1.pdf: visualized Meteor alignments for each sentence</li>
+                    <li>system1-score.pdf: visualized distributions of Meteor statistics</li>
+                    <li>system1-files: LaTeX and gnuplot files used to produce PDFs</li>
+                </ul>
+            </p>
+            <p>
+                Score system2 with Meteor:
+<pre>
+java -Xmx2G -jar meteor-*.jar example/xray/system2.hyp example/xray/reference \
+-norm -writeAlignments -f system2
+</pre>
+                Compare performances of system1 and system2:
+                <pre>python xray/xray.py -c -p compare system1-align.out system2-align.out</pre>
+                -c: compare two Meteor outputs<br />
+                -p compare: prefix output with 'compare'
+            </p>
+            <p>
+                Files produced:
+                <ul>
+                    <li>compare-align.pdf: visualized alignments for both systems overlain</li>
+                    <li>compare-score.pdf: score distributions for both systems</li>
+                    <li>compare-files: LaTeX and gnuplot files</li>
+                </ul>
+            </p>
+            <p>
+                Additional systems:
+            </p>
+            <p>
+                To compare any number of systems, score each with Meteor (as above) and pass the align.out files to X-Ray.
+                Without the -c flag, X-Ray will generate individual alignment matrices for each system and a single score PDF with score distributions for all systems.
+                This is useful for comparing many configurations of the same system.
+            </p>
+            <h3><a name="training"></a>9. Training Meteor Parameters</h3>
+            <p>
+                Meteor parameters can be optimized to maximize agreement with human judgments of translation quality.
+                The most frequently used evaluation task is ranking, where metrics should replicate human preferences between multiple translation hypotheses.
+                Training Meteor to ranking data requires the following:
+                <ul>
+                    <li>System outputs, plain text, one sentence per line: sys1, sys2, ... (typically named after site)</li>
+                    <li>Reference translation: ref</li>
+                    <li>
+                        A file of rankings: rank
+                        <ul>
+                            <li>Lines are formatted as (tab delimited):</li>
+                            <pre>segment-id    lang-pair1    system1    lang-pair2    system2</pre>
+                            <li>This means that for segment id, system1 is ranked better than system2</li>
+                            <li>The same hypothesis pair can have multiple judgments.</li>
+                            <li>Ties should be discarded prior to training.</li>
+                        </ul>
+                    </li>
+                </ul>
+                These files can exist for multiple language pairs with the same target language.
+                For example, in WMT English, we have fr-en.sys1, fr-en.sys2, fr-en.ref, fr-en.rank, de-en.sys1, de-en.sys2, de-en.ref, de-en.rank, ...
+                Meteor will consider all data files in the training directory when optimizing parameters.
+                Meteor outputs the names of processed files to verify the data being used.
+            </p>
+            <p>
+                To prepare for training, convert the input files to SGML format where needed.
+                (Plaintext would be fine in most cases, but datasets distributed as SGML aren't required to have segments in consistent order, which can create problems for older data.)
+                The following example uses the included data in example/train:
+            </p>
+<pre>
+mkdir my-train-dir
+python scripts/sgmlize.py t &lt; example/train/fr-en.sys1 &gt; my-train-dir/fr-en.sys1.sgm
+python scripts/sgmlize.py t &lt; example/train/fr-en.sys2 &gt; my-train-dir/fr-en.sys2.sgm
+python scripts/sgmlize.py r &lt; example/train/fr-en.ref &gt; my-train-dir/fr-en.ref.sgm
+cp example/train/fr-en.rank my-train-dir
+</pre>
+            <p>
+                Since parallel training requires loading several copies of Meteor into memory, filter the paraphrase table to minimize memory usage:
+            </p>
+<pre>
+java -cp meteor-*.jar FilterParaphrase data/paraphrase-en.gz filtered.gz \
+example/train/fr-en.ref
+</pre>
+            <p>
+                Meteor trains parameters by calculating sufficient statistics for all hypotheses and running an exhaustive grid search over rescorings.
+                Every point explored is written out.
+                To run the Trainer directly on one cpu:
+            </p>
+<pre>
+java -cp meteor-*.jar Trainer rank my-train-dir -a filtered.gz &gt; train.out
+</pre>
+            <p>
+                To find the best training point, sort the output:
+            </p>
+<pre>
+sort -gr train.out &gt; train.out.sort
+</pre>
+            <p>
+                The point with the highest correlation is the first line of the sorted file.
+            </p>
+            <p>
+                Running on multiple cpus greatly improves the speed of Meteor training.
+                To run the grid search in parallel, use the meteor_shower script:
+            </p>
+<pre>
+python scripts/meteor_shower.py meteor-*.jar en 4 rank my-train-dir work-dir 8 -a `pwd`/filtered.gz
+</pre>
+            <p>
+                This will keep 8 trainers running in parallel.
+                Make sure to specify an absolute path for the paraphrase file.
+                The results will be written to work-dir, along with a script for sorting the results.    
+            </p>
+            <h3><a name="universal"></a>10. Meteor Universal: Evaluation for Any Language</h3>
+            <p>
+            Meteor now supports language-specific evaluation for any target language for which there is enough data to build a standard phrase-based machine translation system.
+            To build language-specific resources (paraphrase table and function word list), run the new_language.py script with your parallel data and a Moses-format phrase table:
+<pre>
+python scripts/new_language.py out-dir corpus.f corpus.e phrase-table.gz [target-corpus.e]
+</pre>
+            Paraphrases will be extracted matching the target corpus (this can be a collection of relevant dev sets).
+            If no target corpus is provided, the first 10,000 lines of the English corpus will be used (in practice this works adequately).
+            Meteor can then be run with these files:
+<pre>
+java -Xmx2G -jar meteor-*.jar test reference -new out-dir/meteor-files
+</pre>
+            Data should be pre-tokenized.
+            Meteor will lowercase all data for evaluation (-new implies -lower).
+            A universal parameter set will be used.
+            These parameters are tuned on over 100,000 binary ranking judgments across 8 language directions and encode the following general properties:
+            <ul>
+                <li>Preference for recall over precision</li>
+                <li>Preference for word choice over word order</li>
+                <li>Preference for correct content words over correct function words</li>
+            </ul>
+            </p>
+            <h3><a name="thanks"></a>11. Special Thanks</h3>
+            <p>
+                Authors of previous Meteor versions:
+                <ul>
+                    <li>Abhaya Agarwal</li>
+                    <li>Satanjeev "Bano" Banerjee</li>
+                    <li>Alon Lavie</li>
+                </ul>
+                Cotributors to previous Meteor versions:
+                <ul>
+                    <li>Rachel Reynolds</li>
+                    <li>Kenji Sagae</li>
+                    <li>Jeremy Naman</li>
+                    <li>Shyamsundar Jayaraman</li>
+                </ul>
+            </p>
+        </div>
+    </body>
+</html>
