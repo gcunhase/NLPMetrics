@@ -1,10 +1,10 @@
-BLEU corpus: 0.7665730008421341
-BLEU sent_average: 0.6195393488438683
+BLEU corpus: 0.7666
+BLEU sent_average: 0.6195
 
-BLEU corpus: 0.7665730008421341
-BLEU sent_average: 0.6195393488438683
+GLEU corpus: 0.7764
+GLEU sent_average: 0.5767
 
-WER sent_average: 2.3333333333333335
+WER sent_average: 2.3333
 
-TER sent_average: 0.1806645735217164
+TER sent_average: 0.1807
 

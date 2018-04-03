@@ -3,6 +3,7 @@ from module import utils
 import nltk.translate.gleu_score as gleu
 import nltk.translate.bleu_score as bleu
 import pyter
+import nltk
 
 import numpy
 import os
@@ -21,17 +22,21 @@ __author__ = "Gwena Cunha"
 
 # Constants
 BLEU_NAME = "BLEU"
-GLEU_NAME = "BLEU"
+GLEU_NAME = "GLEU"
 WER_NAME = "WER"
-# METEOR_NAME = "METEOR"
 TER_NAME = "TER"
-CIDER_NAME = "CIDEr"
 
 
 class TextScore:
 
     def __init__(self):
         print("Initialize Machine Translation text score")
+
+        # Needed to separate sentences in CONTENT
+        try:
+            nltk.data.find('tokenizers/punkt')
+        except LookupError:
+            nltk.download('punkt')
 
     def score_multiple_from_file(self, ref_file, hyp_file, scores_file, score_type=BLEU_NAME, average_prec="corpus"):
         # Clean scores_file if existent
@@ -49,9 +54,6 @@ class TextScore:
 
         if TER_NAME in score_type:
             scores.append(self.score_one_from_file(ref_file, hyp_file, scores_file, score_type=TER_NAME, average_prec=average_prec))
-
-        if CIDER_NAME in score_type:
-            scores.append(self.score_one_from_file(ref_file, hyp_file, scores_file, score_type=CIDER_NAME, average_prec=average_prec))
 
         return scores
 
@@ -81,25 +83,28 @@ class TextScore:
         real_num_sentences = 0
         for i in range(0, num_sentences):
             if len(reference[i].strip()) != 0 or len(hypothesis[i].strip()) != 0:
-                # Current: split line which has multiple sentences into words
-                # TODO: add a for loop to separate sentences in each line
-                ref, hypo = reference[i].lower().split(), hypothesis[i].lower().split()
-                list_of_references.append([ref])
-                hypotheses.append(hypo)
-                real_num_sentences += 1
+                # Previous: split line which has multiple sentences into words
+                # ref, hypo = reference[i].lower().split(), hypothesis[i].lower().split()
+                # Current: added a for loop to separate sentences in each line
+                sentences_ref = nltk.sent_tokenize(reference[i].lower())
+                sentence_hyp = nltk.sent_tokenize(hypothesis[i].lower())
+                for sent_ref, sent_hyp in zip(sentences_ref, sentence_hyp):
+                    ref, hypo = sent_ref.split(), sent_hyp.split()
+                    list_of_references.append([ref])
+                    hypotheses.append(hypo)
+                    real_num_sentences += 1
 
         print("Sentences: " + str(real_num_sentences))
         scores_str = ""
         score_corpus, score_sent = None, None
 
         # Corpus: only relevant for BLEU and GLEU
-        if "corpus" in average_prec and (WER_NAME not in score_type) and (TER_NAME not in score_type) and\
-                (CIDER_NAME not in score_type):
+        if "corpus" in average_prec and (WER_NAME not in score_type) and (TER_NAME not in score_type):
             score_corpus = self.corpus_score(list_of_references, hypotheses, score_type=score_type)
-            scores_str += score_type + " corpus: " + str(score_corpus) + "\n"
+            scores_str += score_type + " corpus: " + str(format(score_corpus, '.4f')) + "\n"
         if "sent_average" in average_prec:
             score_sent = self.sentence_average_score(list_of_references, hypotheses, score_type=score_type)
-            scores_str += score_type + " sent_average: " + str(score_sent) + "\n"
+            scores_str += score_type + " sent_average: " + str(format(score_sent, '.4f')) + "\n"
 
         scores_str += "\n"
         sf.write(scores_str)
@@ -147,9 +152,6 @@ class TextScore:
         elif TER_NAME in score_type:
             for ref, hyp in zip(list_of_references, hypotheses):
                 sent_average_score += self.ter_score(ref[0], hyp)
-        elif CIDER_NAME in score_type:
-            for ref, hyp in zip(list_of_references, hypotheses):
-                sent_average_score += self.cider_score(ref[0], hyp)
 
         sent_average_score /= len(list_of_references)
 
@@ -211,12 +213,16 @@ class TextScore:
 
         return pyter.ter(hyp, ref)
 
-    def meteor_score_from_files(self, ref, hyp):
+    def meteor_score_from_files(self, ref, hyp, scores_file=None):
         print("METEOR text score (.jar)")
         # https://www.cs.cmu.edu/~alavie/METEOR/examples.html
         # java -Xmx2G -jar meteor-*.jar [hyp.txt] [ref.txt] -norm -f system1 > test.txt
+
+        if scores_file is None:
+            scores_file = utils.project_dir_name() + 'assets/test_meteor.txt'
+
         os.system(
-            'java -Xmx2G -jar {dir}jars/meteor/meteor-*.jar {hyp_file} {ref_file} -norm -f system1 > {dir}assets/test_meteor.txt'.
-            format(dir=utils.project_dir_name(), hyp_file=hyp, ref_file=ref))
+            'java -Xmx2G -jar {dir}jars/meteor/meteor-*.jar {hyp_file} {ref_file} -norm -f system1 > {scores_file}'.
+            format(dir=utils.project_dir_name(), hyp_file=hyp, ref_file=ref, scores_file=scores_file))
         # 'java -Xmx2G -jar meteor-*.jar example/xray/system1.hyp example/xray/reference -norm -writeAlignments -f system1'
 

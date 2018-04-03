@@ -37,16 +37,16 @@ def test_score_file():
     ref_file = utils.project_dir_name()+"assets/test_score_ref.txt"
     hyp_file = utils.project_dir_name() + "assets/test_score_hyp.txt"
     scores_file = utils.project_dir_name() + "assets/test_score.txt"
+    scores_meteor_file = utils.project_dir_name() + "assets/test_meteor.txt"
 
     # Initialize handler for text scores
     text_score = TextScore()
     # BLEU, GLEU, WER, TER
     # text_score.score_multiple_from_file(ref_file, hyp_file, scores_file, score_type="BLEU GLEU", average_prec="corpus sent_average")
-    #text_score.score_multiple_from_file(ref_file, hyp_file, scores_file, score_type="BLEU, GLEU, WER, TER", average_prec="corpus, sent_average")
+    text_score.score_multiple_from_file(ref_file, hyp_file, scores_file, score_type="BLEU, GLEU, WER, TER", average_prec="corpus, sent_average")
 
     # METEOR: receives 2 files
-    #text_score.meteor_score_from_files(ref_file, hyp_file)
-    #text_score.ter_score(ref_file, hyp_file)
+    text_score.meteor_score_from_files(ref_file, hyp_file, scores_file=scores_meteor_file)
 
 
 

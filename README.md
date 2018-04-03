@@ -6,6 +6,7 @@
     * *Macro*: average of sentence scores
     * *Micro*: corpus (sums numerators and denominators for each hypothesis-reference(s) pairs before division)
 
+
 ### Machine Translation
 1. **BLEU** (Bilingual Evaluation Understudy)
     * Papineni 2002
@@ -42,12 +43,15 @@
     * TER = E/R = (minimum number of edits) / (average length of reference text)
     * [PyTER](https://pypi.python.org/pypi/pyter/0.2.2.1)
     * **char-TER**: character level TER
-6. **CIDEr**
-    * Used as a measurement for image caption quality
-7. **GTM** (General Text Matcher)
-    
+
 
 ### Summarization
 1. **ROUGE** (Recall-Oriented Understudy for Gisting Evaluation)
     * About: 
     * Limitation:
+
+
+### Image Caption Quality
+1. **CIDEr (Consensus-based Image Description Evaluation)**
+    * Used as a measurement for image caption quality
+
