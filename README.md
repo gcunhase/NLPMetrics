@@ -23,9 +23,9 @@
     * Levenshtein distance for words
     * Range: greater than 0 (ref = hyp), no max range as ASR can insert an arbitrary number of words
     * Limitation: provides no details on the nature of translation errors
-    * $ WER = $\frac{S+D+I}{N} = \frac{S+D+I}{S+D+C}$
+    * $ WER = \frac{S+D+I}{N} = \frac{S+D+I}{S+D+C} $
         * S: number of substitutions, D: number of deletions, I: number of insertions, C: number of the corrects,
-            N: number of words in the reference (N=S+D+C)
+            N: number of words in the reference ($N=S+D+C$)
     * WAcc (Word Accuracy) or Word Recognition Rate (WRR): $1 - WER$        
     * See [more info](https://martin-thoma.com/word-error-rate-calculation/)
 4. **METEOR** (Metric for Evaluation of Translation with Explicit ORdering):
