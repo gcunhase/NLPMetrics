@@ -17,13 +17,13 @@
 2. **GLEU** (Google-BLEU)
     * Wu et al. 2016
     * Minimum of BLEU recall and precision applied to 1, 2, 3 and 4grams
-        * Recall: (number of matching n-grams) / (number of total n-grams in the target)
-        * Precision: (number of matching n-grams) / (number of total n-grams in generated sequence)
+        * Recall: $\frac{(number of matching n-grams)}{(number of total n-grams in the target)}$
+        * Precision: $\frac{(number of matching n-grams)}{(number of total n-grams in generated sequence)}$
 3. **WER** (Word error rate)
     * Levenshtein distance for words
     * Range: greater than 0 (ref = hyp), no max range as ASR can insert an arbitrary number of words
     * Limitation: provides no details on the nature of translation errors
-    * $ WER = \frac{S+D+I}{N} = \frac{S+D+I}{S+D+C} $
+    * $ WER = $ \frac{S+D+I}{N} = \frac{S+D+I}{S+D+C} $
         * S: number of substitutions, D: number of deletions, I: number of insertions, C: number of the corrects,
             N: number of words in the reference (N=S+D+C)
     * WAcc (Word Accuracy) or Word Recognition Rate (WRR): $1 - WER$        
@@ -40,7 +40,7 @@
     * Snover et al. 2006
     * About: number of edits (words deletion, addition and substitution) required to make a machine translation match
         exactly to the closest reference translation in fluency and semantics
-    * TER = E/R = (minimum number of edits) / (average length of reference text)
+    * TER = $\frac{E}{R} = \frac{(minimum number of edits)}{(average length of reference text)}$
     * [PyTER](https://pypi.python.org/pypi/pyter/0.2.2.1)
     * **char-TER**: character level TER
 
@@ -54,4 +54,3 @@
 ### Image Caption Quality
 1. **CIDEr (Consensus-based Image Description Evaluation)**
     * Used as a measurement for image caption quality
-
