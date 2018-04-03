@@ -22,11 +22,19 @@
 3. **WER** (Word error rate)
     * Levenshtein distance for words
     * Range: greater than 0 (ref = hyp), no max range as ASR can insert an arbitrary number of words
-    * Limitation: provides no details on the nature of translation errors
     * $ WER = \frac{S+D+I}{N} = \frac{S+D+I}{S+D+C} $
         * S: number of substitutions, D: number of deletions, I: number of insertions, C: number of the corrects,
             N: number of words in the reference ($N=S+D+C$)
-    * WAcc (Word Accuracy) or Word Recognition Rate (WRR): $1 - WER$        
+    * WAcc (Word Accuracy) or Word Recognition Rate (WRR): $1 - WER$
+    * Limitation: provides no details on the nature of translation errors
+        * Different errors are treated equally, even thought they might influence the outcome differently (being more disruptive or more difficult/easier to be corrected).
+        * If you look at the formula, there's no distinction between a substitution error and a deletion followed by an insertion error.
+    * Possible solution proposed by Hunt (1990):
+        * Use of a weighted measure
+        * $ WER = \frac{S+0.5D+0.5I}{N} $
+        * Problem:
+            * Metric is used to compare system, so it's unclear whether Hunt's formula could be used to assess the performance of a single system
+            * How effective this measure in helping a user with error correction
     * See [more info](https://martin-thoma.com/word-error-rate-calculation/)
 4. **METEOR** (Metric for Evaluation of Translation with Explicit ORdering):
     * Banerjee 2005
