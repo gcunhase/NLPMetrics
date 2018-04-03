@@ -214,9 +214,16 @@ class TextScore:
         return pyter.ter(hyp, ref)
 
     def meteor_score_from_files(self, ref, hyp, scores_file=None):
-        print("METEOR text score (.jar)")
-        # https://www.cs.cmu.edu/~alavie/METEOR/examples.html
-        # java -Xmx2G -jar meteor-*.jar [hyp.txt] [ref.txt] -norm -f system1 > test.txt
+        """
+            Source: https://www.cs.cmu.edu/~alavie/METEOR/examples.html
+            Java -jar command: java -Xmx2G -jar meteor-*.jar [hyp.txt] [ref.txt] -norm -f system1 > test.txt
+            Command to obtain more results:
+                'java -Xmx2G -jar meteor-*.jar example/xray/system1.hyp example/xray/reference -norm -writeAlignments -f system1'
+
+        :param ref: file containing reference text
+        :param hyp: file containing hypotheses text
+        :param scores_file: file to store METEOR score
+        """
 
         if scores_file is None:
             scores_file = utils.project_dir_name() + 'assets/test_meteor.txt'
@@ -224,5 +231,4 @@ class TextScore:
         os.system(
             'java -Xmx2G -jar {dir}jars/meteor/meteor-*.jar {hyp_file} {ref_file} -norm -f system1 > {scores_file}'.
             format(dir=utils.project_dir_name(), hyp_file=hyp, ref_file=ref, scores_file=scores_file))
-        # 'java -Xmx2G -jar meteor-*.jar example/xray/system1.hyp example/xray/reference -norm -writeAlignments -f system1'
 
