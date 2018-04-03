@@ -17,8 +17,8 @@
 2. **GLEU** (Google-BLEU)
     * Wu et al. 2016
     * Minimum of BLEU recall and precision applied to 1, 2, 3 and 4grams
-        * Recall: $\frac{(number of matching n-grams)}{(number of total n-grams in the target)}$
-        * Precision: $\frac{(number of matching n-grams)}{(number of total n-grams in generated sequence)}$
+        * Recall: (number of matching n-grams) / (number of total n-grams in the target)
+        * Precision: (number of matching n-grams) / (number of total n-grams in generated sequence)
 3. **WER** (Word error rate)
     * Levenshtein distance for words
     * Range: greater than 0 (ref = hyp), no max range as ASR can insert an arbitrary number of words
@@ -40,7 +40,7 @@
     * Snover et al. 2006
     * About: number of edits (words deletion, addition and substitution) required to make a machine translation match
         exactly to the closest reference translation in fluency and semantics
-    * TER = $\frac{E}{R} = \frac{(minimum number of edits)}{(average length of reference text)}$
+    * TER = $\frac{E}{R}$ = (minimum number of edits) / (average length of reference text)
     * [PyTER](https://pypi.python.org/pypi/pyter/0.2.2.1)
     * **char-TER**: character level TER
 
