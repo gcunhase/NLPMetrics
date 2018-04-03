@@ -1,1 +1,2 @@
 *.rb linguist-language=Python
+jars/* linguist-vendored
