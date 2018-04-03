@@ -41,6 +41,7 @@
     * About: number of edits (words deletion, addition and substitution) required to make a machine translation match
         exactly to the closest reference translation in fluency and semantics
     * TER = $\frac{E}{R}$ = (minimum number of edits) / (average length of reference text)
+    * It is generally preferred to BLEU for estimation of sentence post-editing effort. [Source](http://opennmt.net/OpenNMT/tools/scorer/).
     * [PyTER](https://pypi.python.org/pypi/pyter/0.2.2.1)
     * **char-TER**: character level TER
 
