@@ -4,7 +4,7 @@ BLEU sent_average: 0.6195
 GLEU corpus: 0.7764
 GLEU sent_average: 0.5767
 
-WER sent_average: 2.3333
+WER sent_average: 2.0000
 
 TER sent_average: 0.1807
 

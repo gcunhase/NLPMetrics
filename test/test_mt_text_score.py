@@ -1,6 +1,5 @@
 from module.mt_text_score import TextScore
 import module.utils as utils
-import os
 
 
 def test_score_string():

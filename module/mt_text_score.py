@@ -2,7 +2,7 @@
 from module import utils
 import nltk.translate.gleu_score as gleu
 import nltk.translate.bleu_score as bleu
-import pyter
+import pyter  # sudo /usr/bin/python2.7 setup.py install
 import nltk
 
 import numpy
@@ -12,10 +12,8 @@ __author__ = "Gwena Cunha"
 
 
 """ Class that provides methods to calculate similarity between two texts
-
-    When calculating score between 2 files, it is assumed that each line is a sentence.
-    
-    TODO: include case of files where each line is composed of multiple sentences
+    Calculates score between 2 files
+    Each line can be composed of multiple sentences
 
     BLEU and ROUGE source: http://www.nltk.org/api/nltk.translate.html
 """
@@ -202,7 +200,7 @@ class TextScore:
             Java: tercom.jar: http://www.cs.umd.edu/~snover/tercom/
                   Tercom github: https://github.com/jhclark/tercom
 
-                  os.system('java -jar {dir}jars/tercom.7.25.jar -r {ref_file} -h {hyp_file} -n {dir}{output_file}'.
+                  os.system('java -jar {dir}dependencies/tercom.7.25.jar -r {ref_file} -h {hyp_file} -n {dir}{output_file}'.
                   format(hyp_file=hyp, ref_file=ref, dir=utils.project_dir_name(), output_file="assets/test_ter.txt"))
 
 
@@ -229,6 +227,6 @@ class TextScore:
             scores_file = utils.project_dir_name() + 'assets/test_meteor.txt'
 
         os.system(
-            'java -Xmx2G -jar {dir}jars/meteor/meteor-*.jar {hyp_file} {ref_file} -norm -f system1 > {scores_file}'.
+            'java -Xmx2G -jar {dir}dependencies/meteor/meteor-*.jar {hyp_file} {ref_file} -norm -f system1 > {scores_file}'.
             format(dir=utils.project_dir_name(), hyp_file=hyp, ref_file=ref, scores_file=scores_file))
 
