@@ -10,6 +10,12 @@ __author__ = 'Gwena Cunha'
     
 """
 
+# Constants
+BLEU_NAME = "BLEU"
+GOOGLE_BLEU_NAME = "Google-BLEU"
+WER_NAME = "WER"
+TER_NAME = "TER"
+
 
 def project_dir_name():
     current_dir = os.path.abspath(os.path.dirname(__file__))

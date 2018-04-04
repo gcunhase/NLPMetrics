@@ -1,8 +1,8 @@
 BLEU corpus: 0.7666
 BLEU sent_average: 0.6195
 
-GLEU corpus: 0.7764
-GLEU sent_average: 0.5767
+Google-BLEU corpus: 0.7666
+Google-BLEU sent_average: 0.6195
 
 WER sent_average: 2.0000
 

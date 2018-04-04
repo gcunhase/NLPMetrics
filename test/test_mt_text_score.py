@@ -23,13 +23,13 @@ def test_score_string():
 
     # BLEU (corpus and sentence average)
     print("")
-    gleu_corpus_score = text_score.corpus_score(list_of_references, hypotheses, score_type="BLEU")
-    gleu_sent_average_score = text_score.sentence_average_score(list_of_references, hypotheses, score_type="BLEU")
+    gleu_corpus_score = text_score.corpus_score(list_of_references, hypotheses, score_type=utils.BLEU_NAME)
+    gleu_sent_average_score = text_score.sentence_average_score(list_of_references, hypotheses, score_type=utils.BLEU_NAME)
 
     # GLEU (corpus and sentence average)
     print("")
-    bleu_corpus_score = text_score.corpus_score(list_of_references, hypotheses, score_type="GLEU")
-    bleu_sent_average_score = text_score.sentence_average_score(list_of_references, hypotheses, score_type="GLEU")
+    bleu_corpus_score = text_score.corpus_score(list_of_references, hypotheses, score_type=utils.GOOGLE_BLEU_NAME)
+    bleu_sent_average_score = text_score.sentence_average_score(list_of_references, hypotheses, score_type=utils.GOOGLE_BLEU_NAME)
 
 
 def test_score_file():
@@ -42,7 +42,9 @@ def test_score_file():
     text_score = TextScore()
     # BLEU, GLEU, WER, TER
     # text_score.score_multiple_from_file(ref_file, hyp_file, scores_file, score_type="BLEU GLEU", average_prec="corpus sent_average")
-    text_score.score_multiple_from_file(ref_file, hyp_file, scores_file, score_type="BLEU, GLEU, WER, TER", average_prec="corpus, sent_average")
+    text_score.score_multiple_from_file(ref_file, hyp_file, scores_file,
+                                        score_type=utils.BLEU_NAME+utils.GOOGLE_BLEU_NAME+utils.WER_NAME+utils.TER_NAME,
+                                        average_prec="corpus, sent_average")
 
     # METEOR: receives 2 files
     text_score.meteor_score_from_files(ref_file, hyp_file, scores_file=scores_meteor_file)

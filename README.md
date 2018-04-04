@@ -9,17 +9,25 @@
 
 ### Machine Translation
 1. **BLEU** (Bilingual Evaluation Understudy)
-    * Papineni 2002
+    * [Papineni 2002](https://www.aclweb.org/anthology/P02-1040.pdf)
     * 'Measures how many words overlap in a given translation when compared to a reference translation, giving higher 
      scores to sequential words.' (recall)
     * Limitation: designed to be a corpus measure, so it has undesirable properties when used for single sentences.
-    * See [paper](https://www.aclweb.org/anthology/P02-1040.pdf)
-2. **GLEU** (Google-BLEU)
-    * Wu et al. 2016
+2. **GLEU** (*Google-BLEU*)
+    * [Wu et al. 2016](http://arxiv.org/pdf/1609.08144v2.pdf)
     * Minimum of BLEU recall and precision applied to 1, 2, 3 and 4grams
         * Recall: (number of matching n-grams) / (number of total n-grams in the target)
         * Precision: (number of matching n-grams) / (number of total n-grams in generated sequence)
-3. **WER** (Word error rate)
+    * Correlates well with BLEU metric on a corpus metric but does not have its drawbacks for per sentence reward objective.
+3. **GLEU** (Generalized Language Evaluation Understanding or *Generalized BLEU*)
+    * Napoles et al. 2015's ACL paper: [*Ground Truth for Grammatical Error Correction Metrics*](www.aclweb.org/anthology/P/P15/P15-2097.pdf)
+    * Napoles et al. 2016: [*GLEU Without Tuning*](https://arxiv.org/abs/1605.02592)
+        * Minor adjustment required as the number of references increases.
+    * Simple variant of BLEU, it hews much more closely to human judgements.
+    * "In MT, an untranslated word or phrase is almost always an error, but in GEC, this is not the case."
+        * GLEU: "computes n-gram precisions over the reference but assigns more weight to n-grams that have been correctly changed from the source." 
+    * [Python code](https://github.com/cnap/gec-ranking/)        
+4. **WER** (Word error rate)
     * Levenshtein distance for words
     * Range: greater than 0 (ref = hyp), no max range as ASR can insert an arbitrary number of words
     * $ WER = \frac{S+D+I}{N} = \frac{S+D+I}{S+D+C} $
@@ -36,7 +44,7 @@
             * Metric is used to compare system, so it's unclear whether Hunt's formula could be used to assess the performance of a single system
             * How effective this measure in helping a user with error correction
     * See [more info](https://martin-thoma.com/word-error-rate-calculation/)
-4. **METEOR** (Metric for Evaluation of Translation with Explicit ORdering):
+5. **METEOR** (Metric for Evaluation of Translation with Explicit ORdering):
     * Banerjee 2005
     * About: "based on the harmonic mean of unigram precision and recall (weighted higher than precision)"
     * Includes: exact word, stem and synonym matching
@@ -44,7 +52,7 @@
         judgement at the sentence or segment level (unlike BLEU which seeks correlation at the corpus level).
     * It is generally prefered to BLEU for estimation of sentence post-editing effort. [Source](http://opennmt.net/OpenNMT/tools/scorer/)
     * [Python jar wrapper](https://github.com/tylin/coco-caption/tree/master/pycocoevalcap/meteor)
-5. **TER** (Translation Edit Rate)
+6. **TER** (Translation Edit Rate)
     * Snover et al. 2006
     * About: number of edits (words deletion, addition and substitution) required to make a machine translation match
         exactly to the closest reference translation in fluency and semantics
