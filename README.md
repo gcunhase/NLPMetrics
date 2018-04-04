@@ -8,11 +8,13 @@
 
 
 ### Machine Translation
-1. **BLEU** (Bilingual Evaluation Understudy)
+1. **BLEU** (BiLingual Evaluation Understudy)
     * [Papineni 2002](https://www.aclweb.org/anthology/P02-1040.pdf)
     * 'Measures how many words overlap in a given translation when compared to a reference translation, giving higher 
      scores to sequential words.' (recall)
-    * Limitation: designed to be a corpus measure, so it has undesirable properties when used for single sentences.
+    * Limitation:
+        * Doesn't consider different types of errors (insertions, substitutions, synonyms, paraphrase, stems)
+        * Designed to be a corpus measure, so it has undesirable properties when used for single sentences.
 2. **GLEU** (*Google-BLEU*)
     * [Wu et al. 2016](http://arxiv.org/pdf/1609.08144v2.pdf)
     * Minimum of BLEU recall and precision applied to 1, 2, 3 and 4grams
@@ -27,8 +29,8 @@
     * "In MT, an untranslated word or phrase is almost always an error, but in GEC, this is not the case."
         * GLEU: "computes n-gram precisions over the reference but assigns more weight to n-grams that have been correctly changed from the source." 
     * [Python code](https://github.com/cnap/gec-ranking/)        
-4. **WER** (Word error rate)
-    * Levenshtein distance for words
+4. **WER** (Word Error Rate)
+    * Levenshtein distance (edit distance) for words: minimum number of edits (insertion, deletions or substitutions) required to change the hypotheses sentence into the reference.
     * Range: greater than 0 (ref = hyp), no max range as ASR can insert an arbitrary number of words
     * $ WER = \frac{S+D+I}{N} = \frac{S+D+I}{S+D+C} $
         * S: number of substitutions, D: number of deletions, I: number of insertions, C: number of the corrects,
@@ -41,20 +43,19 @@
         * Use of a weighted measure
         * $ WER = \frac{S+0.5D+0.5I}{N} $
         * Problem:
-            * Metric is used to compare system, so it's unclear whether Hunt's formula could be used to assess the performance of a single system
-            * How effective this measure in helping a user with error correction
+            * Metric is used to compare systems, so it's unclear whether Hunt's formula could be used to assess the performance of a single system
+            * How effective this measure is in helping a user with error correction
     * See [more info](https://martin-thoma.com/word-error-rate-calculation/)
 5. **METEOR** (Metric for Evaluation of Translation with Explicit ORdering):
-    * Banerjee 2005
+    * Banerjee 2005's paper: [*Meteor: An Automatic Metric for MT Evaluation with High Levels of Correlation with Human Judgments*](https://www.cs.cmu.edu/~alavie/METEOR/pdf/Lavie-Agarwal-2007-METEOR.pdf)
     * About: "based on the harmonic mean of unigram precision and recall (weighted higher than precision)"
     * Includes: exact word, stem and synonym matching
     * Designed to fix some of the problems found in the BLEU metric, while also producing good correlation with human
         judgement at the sentence or segment level (unlike BLEU which seeks correlation at the corpus level).
-    * It is generally prefered to BLEU for estimation of sentence post-editing effort. [Source](http://opennmt.net/OpenNMT/tools/scorer/)
     * [Python jar wrapper](https://github.com/tylin/coco-caption/tree/master/pycocoevalcap/meteor)
 6. **TER** (Translation Edit Rate)
     * Snover et al. 2006
-    * About: number of edits (words deletion, addition and substitution) required to make a machine translation match
+    * Number of edits (words deletion, addition and substitution) required to make a machine translation match
         exactly to the closest reference translation in fluency and semantics
     * TER = $\frac{E}{R}$ = (minimum number of edits) / (average length of reference text)
     * It is generally preferred to BLEU for estimation of sentence post-editing effort. [Source](http://opennmt.net/OpenNMT/tools/scorer/).
