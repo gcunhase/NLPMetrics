@@ -65,10 +65,11 @@
 
 ### Summarization
 1. **ROUGE** (Recall-Oriented Understudy for Gisting Evaluation)
-    * About: 
-    * Limitation:
-
+    * Lin 2004: [*ROUGE: A Package for Automatic Evaluation of Summaries*](http://www.aclweb.org/anthology/W/W04/W04-1013.pdf)
+    * Package for automatic evaluation of summaries
+    
 
 ### Image Caption Quality
 1. **CIDEr (Consensus-based Image Description Evaluation)**
+    * Vedantam et al. 2015: [*CIDEr: Consensus-based Image Description Evaluation*](https://arxiv.org/abs/1411.5726)
     * Used as a measurement for image caption quality
