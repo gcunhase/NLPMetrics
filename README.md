@@ -21,15 +21,15 @@
         * Recall: (number of matching n-grams) / (number of total n-grams in the target)
         * Precision: (number of matching n-grams) / (number of total n-grams in generated sequence)
     * Correlates well with BLEU metric on a corpus metric but does not have its drawbacks for per sentence reward objective.
-3. **GLEU** (Generalized Language Evaluation Understanding or *Generalized BLEU*)
-    * Napoles et al. 2015's ACL paper: [*Ground Truth for Grammatical Error Correction Metrics*](www.aclweb.org/anthology/P/P15/P15-2097.pdf)
-    * Napoles et al. 2016: [*GLEU Without Tuning*](https://arxiv.org/abs/1605.02592)
-        * Minor adjustment required as the number of references increases.
-    * Simple variant of BLEU, it hews much more closely to human judgements.
-    * "In MT, an untranslated word or phrase is almost always an error, but in GEC, this is not the case."
-        * GLEU: "computes n-gram precisions over the reference but assigns more weight to n-grams that have been correctly changed from the source." 
-    * [Python code](https://github.com/cnap/gec-ranking/)        
-4. **WER** (Word Error Rate)
+    * Not to be confused with Generalized Language Evaluation Understanding or *Generalized BLEU*, also known as **GLEU** 
+        * Napoles et al. 2015's ACL paper: [*Ground Truth for Grammatical Error Correction Metrics*](www.aclweb.org/anthology/P/P15/P15-2097.pdf)
+        * Napoles et al. 2016: [*GLEU Without Tuning*](https://arxiv.org/abs/1605.02592)
+            * Minor adjustment required as the number of references increases.
+        * Simple variant of BLEU, it hews much more closely to human judgements.
+        * "In MT, an untranslated word or phrase is almost always an error, but in GEC, this is not the case."
+            * GLEU: "computes n-gram precisions over the reference but assigns more weight to n-grams that have been correctly changed from the source." 
+        * [Python code](https://github.com/cnap/gec-ranking/)        
+3. **WER** (Word Error Rate)
     * Levenshtein distance (edit distance) for words: minimum number of edits (insertion, deletions or substitutions) required to change the hypotheses sentence into the reference.
     * Range: greater than 0 (ref = hyp), no max range as ASR can insert an arbitrary number of words
     * $ WER = \frac{S+D+I}{N} = \frac{S+D+I}{S+D+C} $
@@ -46,14 +46,14 @@
             * Metric is used to compare systems, so it's unclear whether Hunt's formula could be used to assess the performance of a single system
             * How effective this measure is in helping a user with error correction
     * See [more info](https://martin-thoma.com/word-error-rate-calculation/)
-5. **METEOR** (Metric for Evaluation of Translation with Explicit ORdering):
+4. **METEOR** (Metric for Evaluation of Translation with Explicit ORdering):
     * Banerjee 2005's paper: [*Meteor: An Automatic Metric for MT Evaluation with High Levels of Correlation with Human Judgments*](https://www.cs.cmu.edu/~alavie/METEOR/pdf/Lavie-Agarwal-2007-METEOR.pdf)
     * About: "based on the harmonic mean of unigram precision and recall (weighted higher than precision)"
     * Includes: exact word, stem and synonym matching
     * Designed to fix some of the problems found in the BLEU metric, while also producing good correlation with human
         judgement at the sentence or segment level (unlike BLEU which seeks correlation at the corpus level).
     * [Python jar wrapper](https://github.com/tylin/coco-caption/tree/master/pycocoevalcap/meteor)
-6. **TER** (Translation Edit Rate)
+5. **TER** (Translation Edit Rate)
     * Snover et al. 2006
     * Number of edits (words deletion, addition and substitution) required to make a machine translation match
         exactly to the closest reference translation in fluency and semantics

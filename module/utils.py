@@ -12,7 +12,7 @@ __author__ = 'Gwena Cunha'
 
 # Constants
 BLEU_NAME = "BLEU"
-GOOGLE_BLEU_NAME = "Google-BLEU"
+GOOGLE_BLEU_NAME = "GLEU"  # "Google-BLEU"
 WER_NAME = "WER"
 TER_NAME = "TER"
 
