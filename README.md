@@ -1,6 +1,6 @@
 ### About
 
-* [Natural Language Processing Performance Metrics](https://github.com/gcunhase/NLPMetrics/blob/master/assets/NLP_performance_metrics-April6th2018.pdf)
+* Natural Language Processing Performance Metrics [[ppt](https://github.com/gcunhase/NLPMetrics/blob/master/assets/NLP_performance_metrics-April6th2018.pdf)]
 
 <p align="center">
 <img src="https://github.com/gcunhase/NLPMetrics/blob/master/assets/nlp_metrics.png" width="300" alt="NLP Metrics Timeline"/>
