@@ -1,11 +1,14 @@
 ### About
 
-* Natural Language Processing Performance Metrics
+* [Natural Language Processing Performance Metrics](https://github.com/gcunhase/NLPMetrics/blob/master/assets/NLP_performance_metrics-April6th2018.pdf)
+
+<p align="center">
+<img src="https://github.com/gcunhase/NLPMetrics/blob/master/assets/nlp_metrics.png" width="300" alt="NLP Metrics Timeline"/>
+</p>
 
 * Average precision:
     * *Macro*: average of sentence scores
     * *Micro*: corpus (sums numerators and denominators for each hypothesis-reference(s) pairs before division)
-
 
 ### Machine Translation
 1. **BLEU** (BiLingual Evaluation Understudy)
