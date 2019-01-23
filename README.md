@@ -10,7 +10,29 @@
     * *Macro*: average of sentence scores
     * *Micro*: corpus (sums numerators and denominators for each hypothesis-reference(s) pairs before division)
 
-### Machine Translation
+### How to use it
+* Check out `test_mt_text_score.py` under the `test` directory
+* Currently only supporting MT metrics
+
+### Notebooks
+<table align="center"> 
+  <tr>
+    <td align="center"><b>Metric</b></td>
+    <td align="center"><b>Application</b></td>
+    <td align="center" colspan="2"><b>Notebook</b></td>
+  </tr>
+  <tr>
+    <td align="center">BLEU</td><td align="center">Machine Translation</td>
+    <td align="center">[Jupyter](https://github.com/gcunhase/NLPMetrics/blob/master/notebooks/bleu.ipynb)</td>
+    <td align="center">[Colab](https://colab.research.google.com/github/gcunhase/NLPMetrics/blob/master/notebooks/bleu.ipynb)</td>
+  </tr>
+</table>
+
+* TODO:
+    * GLEU,WER, METEOR, ROUGE, CIDEr
+
+### Evaluation Metrics
+#### Machine Translation
 1. **BLEU** (BiLingual Evaluation Understudy)
     * [Papineni 2002](https://www.aclweb.org/anthology/P02-1040.pdf)
     * 'Measures how many words overlap in a given translation when compared to a reference translation, giving higher 
@@ -66,13 +88,13 @@
     * **char-TER**: character level TER
 
 
-### Summarization
+#### Summarization
 1. **ROUGE** (Recall-Oriented Understudy for Gisting Evaluation)
     * Lin 2004: [*ROUGE: A Package for Automatic Evaluation of Summaries*](http://www.aclweb.org/anthology/W/W04/W04-1013.pdf)
     * Package for automatic evaluation of summaries
     
 
-### Image Caption Quality
+#### Image Caption Quality
 1. **CIDEr (Consensus-based Image Description Evaluation)**
     * Vedantam et al. 2015: [*CIDEr: Consensus-based Image Description Evaluation*](https://arxiv.org/abs/1411.5726)
     * Used as a measurement for image caption quality
