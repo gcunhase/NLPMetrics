@@ -23,8 +23,8 @@
   </tr>
   <tr>
     <td align="center">BLEU</td><td align="center">Machine Translation</td>
-    <td align="center">[Jupyter](https://github.com/gcunhase/NLPMetrics/blob/master/notebooks/bleu.ipynb)</td>
-    <td align="center">[Colab](https://colab.research.google.com/github/gcunhase/NLPMetrics/blob/master/notebooks/bleu.ipynb)</td>
+    <td align="center"><a href="https://github.com/gcunhase/NLPMetrics/blob/master/notebooks/bleu.ipynb">Jupyter</a></td>
+    <td align="center"><a href="https://colab.research.google.com/github/gcunhase/NLPMetrics/blob/master/notebooks/bleu.ipynb">Colab</a></td>
   </tr>
 </table>
 
