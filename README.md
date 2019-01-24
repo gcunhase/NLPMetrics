@@ -84,7 +84,7 @@
         judgement at the sentence or segment level (unlike BLEU which seeks correlation at the corpus level).
     * [Python jar wrapper](https://github.com/tylin/coco-caption/tree/master/pycocoevalcap/meteor)
 5. **TER** (Translation Edit Rate)
-    * Snover et al. 2006
+    * Snover et al. 2006's paper: [A study of translation edit rate with targeted human annotation](https://www.cs.umd.edu/~snover/pub/amta06/ter_amta.pdf)
     * Number of edits (words deletion, addition and substitution) required to make a machine translation match
         exactly to the closest reference translation in fluency and semantics
     * TER = $\frac{E}{R}$ = (minimum number of edits) / (average length of reference text)
