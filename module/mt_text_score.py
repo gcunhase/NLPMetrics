@@ -15,7 +15,7 @@ __author__ = "Gwena Cunha"
     Calculates score between 2 files
     Each line can be composed of multiple sentences
 
-    BLEU and ROUGE source: http://www.nltk.org/api/nltk.translate.html
+    BLEU and GLEU source: http://www.nltk.org/api/nltk.translate.html
 """
 
 
