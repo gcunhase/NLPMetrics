@@ -11,7 +11,9 @@
     * *Micro*: corpus (sums numerators and denominators for each hypothesis-reference(s) pairs before division)
 
 ### How to use it
-* Check out `test_mt_text_score.py` under the `test` directory
+* Requirements: Python 2.7
+* Install dependencies: ```pip install -r requirements.txt```
+* Run: `python test/test_mt_text_score.py`
 * Currently only supporting MT metrics
 
 ### Notebooks
