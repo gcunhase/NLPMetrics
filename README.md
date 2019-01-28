@@ -29,14 +29,14 @@
     <td align="center"><a href="https://colab.research.google.com/github/gcunhase/NLPMetrics/blob/master/notebooks/bleu.ipynb">Colab</a></td>
   </tr>
   <tr>
-    <td align="center">GLEU</td><td align="center">Machine Translation</td>
+    <td align="center">GLEU (Google-BLEU)</td><td align="center">Machine Translation</td>
     <td align="center"><a href="https://github.com/gcunhase/NLPMetrics/blob/master/notebooks/gleu.ipynb">Jupyter</a></td>
     <td align="center"><a href="https://colab.research.google.com/github/gcunhase/NLPMetrics/blob/master/notebooks/gleu.ipynb">Colab</a></td>
   </tr>
 </table>
 
 * TODO:
-    * WER, METEOR, ROUGE, CIDEr
+    * Generalized BLEU (?), WER, METEOR, ROUGE, CIDEr
 
 ### Evaluation Metrics
 #### Machine Translation
