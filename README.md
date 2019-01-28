@@ -54,7 +54,7 @@
         * Precision: (number of matching n-grams) / (number of total n-grams in generated sequence)
     * Correlates well with BLEU metric on a corpus metric but does not have its drawbacks for per sentence reward objective.
     * Not to be confused with Generalized Language Evaluation Understanding or *Generalized BLEU*, also known as **GLEU** 
-        * Napoles et al. 2015's ACL paper: [*Ground Truth for Grammatical Error Correction Metrics*](www.aclweb.org/anthology/P/P15/P15-2097.pdf)
+        * Napoles et al. 2015's ACL paper: [*Ground Truth for Grammatical Error Correction Metrics*](http://www.aclweb.org/anthology/P15-2097)
         * Napoles et al. 2016: [*GLEU Without Tuning*](https://arxiv.org/abs/1605.02592)
             * Minor adjustment required as the number of references increases.
         * Simple variant of BLEU, it hews much more closely to human judgements.
