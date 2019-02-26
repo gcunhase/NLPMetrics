@@ -63,7 +63,7 @@
         * [Python code](https://github.com/cnap/gec-ranking/)        
 3. **WER** (Word Error Rate)
     * Levenshtein distance (edit distance) for words: minimum number of edits (insertion, deletions or substitutions) required to change the hypotheses sentence into the reference.
-    * Range: greater than 0 (ref = hyp), no max range as ASR can insert an arbitrary number of words
+    * Range: greater than 0 (ref = hyp), no max range as Automatic Speech Recognizer (ASR) can insert an arbitrary number of words
     * $ WER = \frac{S+D+I}{N} = \frac{S+D+I}{S+D+C} $
         * S: number of substitutions, D: number of deletions, I: number of insertions, C: number of the corrects,
             N: number of words in the reference ($N=S+D+C$)
