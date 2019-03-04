@@ -33,10 +33,15 @@
     <td align="center"><a href="https://github.com/gcunhase/NLPMetrics/blob/master/notebooks/gleu.ipynb">Jupyter</a></td>
     <td align="center"><a href="https://colab.research.google.com/github/gcunhase/NLPMetrics/blob/master/notebooks/gleu.ipynb">Colab</a></td>
   </tr>
+  <tr>
+    <td align="center">WER (Word Error Rate)</td><td align="center">Transcription Accuracy<br>Machine Translation</td>
+    <td align="center"><a href="https://github.com/gcunhase/NLPMetrics/blob/master/notebooks/wer.ipynb">Jupyter</a></td>
+    <td align="center"><a href="https://colab.research.google.com/github/gcunhase/NLPMetrics/blob/master/notebooks/wer.ipynb">Colab</a></td>
+  </tr>
 </table>
 
 * TODO:
-    * Generalized BLEU (?), WER, METEOR, ROUGE, CIDEr
+    * Generalized BLEU (?), METEOR, ROUGE, CIDEr
 
 ### Evaluation Metrics
 #### Machine Translation
