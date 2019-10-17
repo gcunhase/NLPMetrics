@@ -1,22 +1,26 @@
-### About
+[![DOI](https://zenodo.org/badge/125310343.svg)](https://zenodo.org/badge/latestdoi/125310343)
 
-* Natural Language Processing Performance Metrics [[ppt](https://github.com/gcunhase/NLPMetrics/blob/master/assets/NLP_performance_metrics-April6th2018.pdf)]
+## About
+Natural Language Processing Performance Metrics [[ppt](https://github.com/gcunhase/NLPMetrics/blob/master/assets/NLP_performance_metrics-April6th2018.pdf)]
 
 <p align="center">
-<img src="https://github.com/gcunhase/NLPMetrics/blob/master/assets/nlp_metrics.png" width="300" alt="NLP Metrics Timeline"/>
+<img src="./assets/nlp_metrics.png" width="300" alt="NLP Metrics Timeline"/>
 </p>
 
-* Average precision:
-    * *Macro*: average of sentence scores
-    * *Micro*: corpus (sums numerators and denominators for each hypothesis-reference(s) pairs before division)
+### Contents
+[Requirements](#requirements) • [How to Use](#how-to-use) • [Notebooks](#notebooks) • [Quick Notes](#evaluation-metrics-quick-notes) • [How to Cite](#acknowledgement)
 
-### How to use it
-* Requirements: Python 2.7
-* Install dependencies: ```pip install -r requirements.txt```
+## Requirements
+Tested on Python 2.7
+```
+pip install -r requirements.txt
+```
+
+## How to Use
 * Run: `python test/test_mt_text_score.py`
 * Currently only supporting MT metrics
 
-### Notebooks
+## Notebooks
 <table align="center"> 
   <tr>
     <td align="center"><b>Metric</b></td>
@@ -43,8 +47,12 @@
 * TODO:
     * Generalized BLEU (?), METEOR, ROUGE, CIDEr
 
-### Evaluation Metrics
-#### Machine Translation
+## Evaluation Metrics: Quick Notes
+### Average precision
+   * *Macro*: average of sentence scores
+   * *Micro*: corpus (sums numerators and denominators for each hypothesis-reference(s) pairs before division)
+
+### Machine Translation
 1. **BLEU** (BiLingual Evaluation Understudy)
     * [Papineni 2002](https://www.aclweb.org/anthology/P02-1040.pdf)
     * 'Measures how many words overlap in a given translation when compared to a reference translation, giving higher 
@@ -100,13 +108,28 @@
     * **char-TER**: character level TER
 
 
-#### Summarization
+### Summarization
 1. **ROUGE** (Recall-Oriented Understudy for Gisting Evaluation)
     * Lin 2004: [*ROUGE: A Package for Automatic Evaluation of Summaries*](http://www.aclweb.org/anthology/W/W04/W04-1013.pdf)
     * Package for automatic evaluation of summaries
     
 
-#### Image Caption Quality
+### Image Caption Quality
 1. **CIDEr (Consensus-based Image Description Evaluation)**
     * Vedantam et al. 2015: [*CIDEr: Consensus-based Image Description Evaluation*](https://arxiv.org/abs/1411.5726)
     * Used as a measurement for image caption quality
+    
+## Acknowledgement
+Please star or fork if this code was useful for you. If you use it in a paper, please cite as:
+```
+@misc{cunha_sergio2019nlp_metrics,
+    author       = {Gwenaelle Cunha Sergio},
+    title        = {The Natural Language Processing Metrics Python Repository},
+    month        = oct,
+    year         = 2019,
+    doi          = {10.5281/zenodo.3496559},
+    version      = {v1.0},
+    publisher    = {Zenodo},
+    url          = {https://github.com/gcunhase/NLPMetrics}
+    }
+```    
