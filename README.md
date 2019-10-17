@@ -122,9 +122,10 @@ pip install -r requirements.txt
 ## Acknowledgement
 Please star or fork if this code was useful for you. If you use it in a paper, please cite as:
 ```
-@misc{cunha_sergio2019nlp_metrics,
+@software{cunha_sergio2019nlp_metrics,
     author       = {Gwenaelle Cunha Sergio},
-    title        = {The Natural Language Processing Metrics Python Repository},
+    title        = {{gcunhase/NLPMetrics: The Natural Language 
+                   Processing Metrics Python Repository}},
     month        = oct,
     year         = 2019,
     doi          = {10.5281/zenodo.3496559},
